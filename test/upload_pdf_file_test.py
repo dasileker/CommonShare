@@ -21,10 +21,11 @@ class DocumentFormTests(unittest.TestCase):
         self.driver.get("https://your-application-url.com")
         self.driver.maximize_window()
 
-    def test_upload_valid_document(self):
+    # test for upload document with valid format and size
+    def test_upload_valid_pdf_document(self):
         driver = self.driver
 
-        # Step 1: Document Upload with valid format and size
+        # Step 1: PDF Document Upload with valid format and size
         upload_button = driver.find_element(By.ID, "upload-btn")
         upload_button.send_keys(os.path.abspath("path/to/valid_document.pdf"))
 
@@ -34,6 +35,20 @@ class DocumentFormTests(unittest.TestCase):
         )
         self.assertIn("Upload Successful", success_message.text)
 
+    def test_upload_valid_docx_document(self):
+        driver = self.driver
+
+        # Step 1: DOCX Document Upload with valid format and size
+        upload_button = driver.find_element(By.ID, "upload-btn")
+        upload_button.send_keys(os.path.abspath("path/to/valid_document.docx"))
+
+        # Validate successful upload
+        success_message = WebDriverWait(driver, 10).until(
+            EC.visibility_of_element_located((By.ID, "success-msg"))
+        )
+        self.assertIn("Upload Successful", success_message.text)
+
+    # test for upload document with invalid format
     def test_upload_invalid_format(self):
         driver = self.driver
 
@@ -47,6 +62,7 @@ class DocumentFormTests(unittest.TestCase):
         )
         self.assertIn("Invalid file format", error_message.text)
 
+    # test for upload document with invalid size
     def test_upload_oversized_document(self):
         driver = self.driver
 
@@ -60,6 +76,8 @@ class DocumentFormTests(unittest.TestCase):
         )
         self.assertIn("File size exceeds limit", error_message.text)
 
+
+    # test for upload document with valid Metadata
     def test_enter_metadata(self):
         driver = self.driver
 
@@ -90,6 +108,7 @@ class DocumentFormTests(unittest.TestCase):
         )
         self.assertIn("Review your submission", step3_message.text)
 
+    # test for upload document with invalid Metadata
     def test_invalid_metadata_submission(self):
         driver = self.driver
 
@@ -117,6 +136,7 @@ class DocumentFormTests(unittest.TestCase):
         )
         self.assertIn("Title is required", error_message.text)
 
+    # test for upload document with network fails
     def test_form_submission_with_network_failure(self):
         driver = self.driver
 

@@ -1,0 +1,43 @@
+name: Selenium Tests
+
+on:
+  pull_request:
+    branches:
+      - main  # or any branch you'd like to trigger the workflow on
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      selenium:
+        image: selenium/standalone-chrome:latest
+        ports:
+          - 4444:4444
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.x  # Replace with your desired Python version
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install selenium pytest pytest-html pytest-xdist
+
+      - name: Run Selenium tests
+        env:
+          DISPLAY: :99.0  # Required for running tests with a GUI (Xvfb)
+        run: |
+          pytest -n 4 --html=report.html
+
+      - name: Upload Test Report
+        if: always()
+        uses: actions/upload-artifact@v2
+        with:
+          name: selenium-test-report
+          path: report.html

@@ -7,6 +7,7 @@ import os
 
 class DocumentFormTests(unittest.TestCase):
 
+    # this part is for cross browser testing please Download and add the webdriver in your PATH.
     def setUp(self):
         # Set up Chrome WebDriver (you can change this to Firefox/Edge)
         self.browser = "chrome"  # You can change this to "firefox" or "edge"
@@ -186,6 +187,7 @@ class DocumentFormTests(unittest.TestCase):
             throughput=5000 * 1024,  # 5 Mbps
         )
 
+    # test of document that triggers dynamic elements
     def test_dynamic_element_loading(self):
         driver = self.driver
 

@@ -63,7 +63,7 @@ class DocumentFormTests(unittest.TestCase):
         )
         self.assertIn("Invalid file format", error_message.text)
 
-    # test for upload document with invalid size
+    # test for upload document with invalid size => 10mb.
     def test_upload_oversized_document(self):
         driver = self.driver
 

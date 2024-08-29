@@ -8,6 +8,8 @@ import os
 class DocumentFormTests(unittest.TestCase):
 
     # this part is for cross browser testing please Download and add the webdriver in your PATH.
+    # Partially Covered: The test setup allows running tests across multiple browsers and supports switching between them easily.
+    # However, documenting inconsistencies and implementing browser-specific workarounds would require additional steps based on the actual test results and observed issues.
     def setUp(self):
         # Set up Chrome WebDriver (you can change this to Firefox/Edge)
         self.browser = "chrome"  # You can change this to "firefox" or "edge"
